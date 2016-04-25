@@ -8,15 +8,12 @@ package app.matrix.point {
 		}
 
 		public function update(worldPoint:WorldPoint):void {
-			if (worldPoint.updated) {
-				return;
-			}
 			switch (worldPoint.pointType) {
 				case PointTypeEnum.WATER:
 					switch (worldPoint.b.pointType) {
-						case PointTypeEnum.VACUUM:
+						/*case PointTypeEnum.VACUUM:
 							swapPointsType(worldPoint, worldPoint.b);
-							return;
+							return;*/
 						case PointTypeEnum.IRON:
 						case PointTypeEnum.WATER:
 							var vacuumAtRight:Boolean = !worldPoint.r.updated && worldPoint.r.pointType == PointTypeEnum.VACUUM;
@@ -54,22 +51,22 @@ package app.matrix.point {
 							break;
 					}
 					break;
-				case PointTypeEnum.IRON:
+				/*case PointTypeEnum.IRON:
 					switch (worldPoint.b.pointType) {
 						case PointTypeEnum.VACUUM:
 						case PointTypeEnum.WATER:
 							swapPointsType(worldPoint, worldPoint.b);
 							break;
 					}
-					break;
-				case PointTypeEnum.VACUUM:
+					break;*/
+				/*case PointTypeEnum.VACUUM:
 					switch (worldPoint.t.pointType) {
 						case PointTypeEnum.IRON:
 						case PointTypeEnum.WATER:
 							swapPointsType(worldPoint, worldPoint.t);
 							break;
 					}
-					break;
+					break;*/
 
 			}
 		}

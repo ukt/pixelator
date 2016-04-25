@@ -3,8 +3,12 @@ package app {
 	import app.matrix.MatrixWorld;
 	import app.matrix.RandomMatrixReader;
 	import app.matrix.point.DemoWorldPointUpdater;
+	import app.matrix.point.DensityPointUpdater;
 	import app.matrix.point.IronBreakerWorldPointUpdater;
+	import app.matrix.point.IronPointUpdater;
 	import app.matrix.point.PointSpawnerWorldPointUpdater;
+	import app.matrix.point.VacuumPointUpdater;
+	import app.matrix.point.WaterPointUpdater;
 	import app.matrix.point.WorldPointUpdater;
 	import app.ui.drawer.AreaDrawer;
 
@@ -27,9 +31,13 @@ package app {
 			var width:int = 4;
 			var randomMatrixReader:RandomMatrixReader = new RandomMatrixReader(main.stage.stageWidth, main.stage.stageHeight, width, width);
 			var pointUpdaters:Vector.<WorldPointUpdater> = new <WorldPointUpdater>[];
-			pointUpdaters.push(new DemoWorldPointUpdater());
-			pointUpdaters.push(new PointSpawnerWorldPointUpdater());
-			pointUpdaters.push(new IronBreakerWorldPointUpdater());
+//			pointUpdaters.push(new DemoWorldPointUpdater());
+			pointUpdaters.push(new DensityPointUpdater());
+//			pointUpdaters.push(new WaterPointUpdater());
+//			pointUpdaters.push(new IronPointUpdater());
+//			pointUpdaters.push(new VacuumPointUpdater());
+//			pointUpdaters.push(new PointSpawnerWorldPointUpdater());
+//			pointUpdaters.push(new IronBreakerWorldPointUpdater());
 			matrixWorld.initialize(randomMatrixReader, pointUpdaters);
 			matrixWorld.run();
 

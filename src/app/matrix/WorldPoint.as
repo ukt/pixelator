@@ -9,6 +9,7 @@ package app.matrix {
 		public var tl:WorldPoint;
 		public var r:WorldPoint;
 		public var l:WorldPoint;
+		private var _density:uint = 1;
 		public var updated:Boolean = true;
 
 		public function get positionX():uint {
@@ -26,6 +27,7 @@ package app.matrix {
 			this._positionX = positionX;
 			this._positionY = positionY;
 			_pointType = pointType;
+			_density *= positionY+1
 		}
 
 		public function update():void {
@@ -37,10 +39,14 @@ package app.matrix {
 		}
 
 		public function set pointType(value:PointType):void {
-			if(_pointType != value) {
+			if (_pointType != value) {
 				updated = true;
 				_pointType = value;
 			}
+		}
+
+		public function get density():uint {
+			return _density * _pointType.densityMultiplier;
 		}
 	}
 }

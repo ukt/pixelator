@@ -9,6 +9,8 @@ package app.ui.drawer {
 	import flash.utils.ByteArray;
 
 	import loka.asUtils.TimeDoing;
+
+	import loka.asUtils.TimeDoing;
 	import loka.console.ConsoleCommand;
 
 	public class AreaDrawer {
@@ -22,6 +24,8 @@ package app.ui.drawer {
 			this.matrixWorld = matrixWorld;
 			main.cacheAsBitmap = true;
 			ConsoleCommand.registerCommand("setPointWidth", setPointWidth, "need to set point width");
+			ConsoleCommand.registerCommand("resetTimeDoing", TimeDoing.resetAll, "need to reset time collector");
+			ConsoleCommand.registerCommand("redraw", onEnterFrame, "need to execute on enter frame", ConsoleCommand.getHotKey(78));
 		}
 
 		private function setPointWidth(data:*):void {
@@ -57,7 +61,8 @@ package app.ui.drawer {
 		private var inputVector:Vector.<uint> = new <uint>[];
 		private var bytes:ByteArray = new ByteArray();
 
-		private function onEnterFrame(event:Event):void {
+		private function onEnterFrame(event:Event = null):void {
+			TimeDoing.setTime("onEnterFrame");
 			if(setPointWidthF){
 				setPointWidthF();
 				setPointWidthF = null;
@@ -67,14 +72,16 @@ package app.ui.drawer {
 			collectVector();
 //			collectByteArray();
 			TimeDoing.setTime("bitmapData.set");
+
 			bytes.position = 0;
 			bitmapData.setVector(new Rectangle(0, 50, matrixWorld.matrix[0].length * pointW, matrixWorld.matrix.length * pointW), inputVector);
 //			bitmapData.setPixels(new Rectangle(matrixWorld.matrix[0].length * pointW, 50, matrixWorld.matrix[0].length * pointW, matrixWorld.matrix.length * pointW), bytes);
-			TimeDoing.traceTime("bitmapData.set");
+			TimeDoing.traceIfIncreased("bitmapData.set");
 			//			trace("timeOut", getTimer() - timer);
 			TimeDoing.setTime("matrixWorld.update()");
 			matrixWorld.update();
-			TimeDoing.traceTime("matrixWorld.update()");
+			TimeDoing.traceIfIncreased("matrixWorld.update()");
+			TimeDoing.traceIfIncreased("onEnterFrame");
 
 		}
 
@@ -94,7 +101,7 @@ package app.ui.drawer {
 					}
 				//				trace(TimeDoing.getTime("collectLinePixels"));
 			}
-			TimeDoing.traceTime("collectPixelsInByteArray");
+			TimeDoing.traceIfIncreased("collectPixelsInByteArray");
 		}
 
 		private function collectVector():void {
@@ -121,7 +128,7 @@ package app.ui.drawer {
 				}
 				vectorIndex += matrixLine.length * pointSquareWithoutFirstLine;
 			}
-			TimeDoing.traceTime("collectPixelsInVector");
+			TimeDoing.traceIfIncreased("collectPixelsInVector");
 		}
 	}
 }

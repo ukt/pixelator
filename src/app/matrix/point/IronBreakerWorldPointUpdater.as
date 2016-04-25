@@ -4,6 +4,7 @@ package app.matrix.point {
 	import app.matrix.WorldPoint;
 
 	public class IronBreakerWorldPointUpdater implements WorldPointUpdater {
+
 		public function IronBreakerWorldPointUpdater() {
 		}
 
@@ -21,7 +22,19 @@ package app.matrix.point {
 //			splitter = Math.round(Math.random() * 50) + 50;
 			splitter = 1;
 			i = 1;
-
+			/*if (PointUtils.isPointTypeAsMask(worldPoint, PointTypeEnum.IRON.mask)) {
+				if (PointUtils.isPointTypeAsMask(worldPoint.t, PointTypeEnum.WATER.mask)) {
+					if (!PointUtils.isPointTypeAsMask(worldPoint.br, PointTypeEnum.IRON.mask) && !PointUtils.isPointTypeAsMask(worldPoint.br, PointTypeEnum.IRON.mask)) {
+						if (isBottomItemAnyTimesIs(worldPoint.b, PointTypeEnum.IRON, 2)) {
+							if (worldPoint.r.pointType == PointTypeEnum.WATER) {
+								swapPointsType(worldPoint, worldPoint.r);
+							} else if (worldPoint.l.pointType == PointTypeEnum.WATER) {
+								swapPointsType(worldPoint, worldPoint.l);
+							}
+						}
+					}
+				}
+			}*/
 			switch (worldPoint.pointType) {
 				case PointTypeEnum.IRON:
 					switch (worldPoint.t.pointType) {
@@ -43,11 +56,17 @@ package app.matrix.point {
 
 		private function isBottomItemAnyTimesIs(b:WorldPoint, pointType:PointType, times:int):Boolean {
 			if(!b || !b.b) return false;
-			if (b.r.pointType != PointTypeEnum.WATER || b.l.pointType != PointTypeEnum.WATER) {
+			if (!PointUtils.isPointTypeAsMask(b.r, PointTypeEnum.WATER.mask)){
 				return false;
 			}
+			if (!PointUtils.isPointTypeAsMask(b.l, PointTypeEnum.WATER.mask)){
+				return false;
+			}/*
+			if (b.r.pointType != PointTypeEnum.WATER || b.l.pointType != PointTypeEnum.WATER) {
+				return false;
+			}*/
 			if (times <= 0) {
-				return b.pointType == pointType;
+				return PointUtils.isPointTypeAsMask(b, pointType.mask);
 			}
 			return isBottomItemAnyTimesIs(b.b, pointType, --times);
 		}
