@@ -3,8 +3,8 @@ package app.matrix {
 		private var _color:int;
 		private var _mask:int;
 		private var _typeName:String;
-		private var _densityMultiplier:uint = 1;
-		public function PointType(color:int, mask:int, densityMultiplier:uint, typeName:String) {
+		private var _densityMultiplier:Number = 1;
+		public function PointType(color:int, mask:int, densityMultiplier:Number, typeName:String) {
 			this._color = color;
 			this._mask = mask;
 			this._typeName = typeName;
@@ -23,7 +23,7 @@ package app.matrix {
 			return _typeName;
 		}
 
-		public function get densityMultiplier():uint {
+		public function get densityMultiplier():Number {
 			return _densityMultiplier;
 		}
 	}
